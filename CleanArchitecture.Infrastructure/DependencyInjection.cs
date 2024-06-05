@@ -1,4 +1,6 @@
-﻿using CleanArchitecture.Infrastructure.Common.Persistence;
+﻿using CleanArchitecture.Application.Common.Interfaces;
+using CleanArchitecture.Infrastructure.Common.Persistence;
+using CleanArchitecture.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,7 +25,7 @@ namespace CleanArchitecture.Infrastructure
         {
             services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer("Data Source = CleanArchitecture.sqlite"));
 
-            //services.AddScoped<IRemindersRepository, RemindersRepository>();
+            services.AddScoped<IMemberRepository,MemberRepository>();
             //services.AddScoped<IUsersRepository, UsersRepository>();
                 
             return services;
