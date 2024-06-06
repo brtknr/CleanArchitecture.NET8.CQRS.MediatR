@@ -10,12 +10,13 @@ namespace CleanArchitecture.Application.Common.Interfaces
     public interface IRepository<T> where T : class 
     {
         
-        Task<T> GetByIdAsync(int id);
-        Task<IEnumerable<T>> GetAllAsync();
+        Task<T?> GetByIdAsync(int id);
+        Task<List<T>> GetAllAsync();
         IQueryable<T> Where(Expression<Func<T, bool>> predicate);
-        Task AddAsync(T entity);
-        void Remove(T entity);
-        T Update(T entity);
+        Task<bool> AddAsync(T entity);
+        bool Remove(T entity);
+        bool Update(T entity);
+        Task<int> SaveAsync();
 
     }
 }

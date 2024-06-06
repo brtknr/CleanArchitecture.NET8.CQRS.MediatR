@@ -13,15 +13,16 @@ namespace CleanArchitecture.Infrastructure.Persistence
     public class MemberRepository : Repository<Member>, IMemberRepository 
     {
         internal new ApplicationDbContext _context;
-        internal new DbSet<Member> dbSet;
 
         public MemberRepository(ApplicationDbContext context) : base(context)
         {
+            _context = context;
         }
 
-        public Task<List<Member>> GetMemberActiveDays(Member member)
-        {
-            throw new NotImplementedException();
-        }
+        //public async Task<int> GetMemberActiveDays(Member member)
+        //{
+            
+        //    throw new NotImplementedException();
+        //}
     }
 }

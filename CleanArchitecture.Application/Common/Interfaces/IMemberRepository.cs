@@ -9,6 +9,6 @@ namespace CleanArchitecture.Application.Common.Interfaces
 {
     public interface IMemberRepository : IRepository<Member>
     {
-        Task<List<Member>> GetMemberActiveDays (Member member);
+        // Task<int> GetMemberActiveDays (Member member);
     }
 }

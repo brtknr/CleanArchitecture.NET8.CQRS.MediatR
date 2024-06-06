@@ -1,7 +1,10 @@
 ﻿using CleanArchitecture.Application.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -20,34 +23,40 @@ namespace CleanArchitecture.Infrastructure.Common.Persistence
             dbSet = context.Set<TEntity>();
         }
 
-        public Task AddAsync(TEntity entity)
+        public async Task<bool> AddAsync(TEntity entity)
         {
-            throw new NotImplementedException();
+            EntityEntry<TEntity> entityEntry = await dbSet.AddAsync(entity);
+            return entityEntry.State == EntityState.Added;
         }
 
-        public Task<IEnumerable<TEntity>> GetAllAsync()
+        public async Task<List<TEntity>> GetAllAsync()
+             => await dbSet
+                        .AsNoTracking()
+                        .ToListAsync();
+
+        public async Task<TEntity?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var entity = await dbSet.FindAsync(id);
+            return entity;
         }
 
-        public Task<TEntity> GetByIdAsync(int id)
+        public bool Remove(TEntity entity)
         {
-            throw new NotImplementedException();
+            EntityEntry<TEntity> entityEntry = dbSet.Remove(entity);
+            return entityEntry.State == EntityState.Deleted;
         }
 
-        public void Remove(TEntity entity)
+        public bool Update(TEntity entity)
         {
-            throw new NotImplementedException();
-        }
-
-        public TEntity Update(TEntity entity)
-        {
-            throw new NotImplementedException();
+            EntityEntry<TEntity> entityEntry = dbSet.Update(entity);
+            return entityEntry.State == EntityState.Modified;
         }
 
         public IQueryable<TEntity> Where(Expression<Func<TEntity, bool>> predicate)
-        {
-            throw new NotImplementedException();
-        }
+            => dbSet.Where(predicate);
+        
+
+        public async Task<int> SaveAsync()
+           => await _context.SaveChangesAsync();
     }
 }

@@ -16,18 +16,20 @@ namespace CleanArchitecture.Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddPersistence();
+            services.AddPersistence(configuration);
 
             return services;
         }
 
-        private static IServiceCollection AddPersistence(this IServiceCollection services)
+        private static IServiceCollection AddPersistence(this IServiceCollection services,IConfiguration configuration)
         {
-            services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer("Data Source = CleanArchitecture.sqlite"));
+            
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("GymDb"))
+                );
 
             services.AddScoped<IMemberRepository,MemberRepository>();
-            //services.AddScoped<IUsersRepository, UsersRepository>();
-                
+               
             return services;
         }
     }
