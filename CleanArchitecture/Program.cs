@@ -1,3 +1,4 @@
+using CleanArchitecture.Api.Middlewares;
 using CleanArchitecture.Application;
 using CleanArchitecture.Infrastructure;
 
@@ -23,6 +24,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+
+app.UseMiddleware<ValidationExceptionHandlingMiddleware>();
 
 app.UseAuthorization();
 

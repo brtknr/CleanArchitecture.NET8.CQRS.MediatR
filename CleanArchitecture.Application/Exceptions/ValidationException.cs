@@ -3,9 +3,9 @@
 namespace Exceptions
 {
     [Serializable]
-    internal class ValidationException : Exception
+    public class ValidationException : Exception
     {
-        private object errors;
+        public object errors;
 
         public ValidationException()
         {
