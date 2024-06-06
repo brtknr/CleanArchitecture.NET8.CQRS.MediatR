@@ -18,7 +18,7 @@ namespace CleanArchitecture.Application.Members.Commands.AddMember
         public async Task<Member> Handle(AddMemberCommand request, CancellationToken cancellationToken)
         {
 
-            _validator.ValidateAndThrow(request);
+            //_validator.ValidateAndThrow(request);
 
 
             Member member = new()

@@ -1,4 +1,5 @@
-﻿using CleanArchitecture.Application.Members.Commands.AddMember;
+﻿using CleanArchitecture.Application.Common.Behaviors;
+using CleanArchitecture.Application.Members.Commands.AddMember;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -16,6 +17,7 @@ namespace CleanArchitecture.Application
             services.AddMediatR(options =>
             {
                 options.RegisterServicesFromAssembly(typeof(DependencyInjection).Assembly);
+                options.AddOpenBehavior(typeof(ValidationBehavior<,>));
 
             });
 
