@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CleanArchitecture.Application.Members.Commands.AddMember;
+using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +19,8 @@ namespace CleanArchitecture.Application
 
             });
 
+            services.AddValidatorsFromAssemblyContaining(typeof(AddMemberCommandValidator));
+           
             return services;
         }
     }

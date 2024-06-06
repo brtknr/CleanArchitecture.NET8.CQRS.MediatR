@@ -57,13 +57,13 @@ namespace CleanArchitecture.Controllers
             return await _mediator.Send(query);
         }
 
-        [HttpGet]
-        public Member GetMemberById(int id)
-        {
-            var member = MemberList.FirstOrDefault(x => x.Id == id);
-            if (member == null) throw new Exception("Cannot find the member linked the specified id");
-            return member;
-        }
+        //[HttpGet]
+        //public Member GetMemberById(int id)
+        //{
+        //    var member = MemberList.FirstOrDefault(x => x.Id == id);
+        //    if (member == null) throw new Exception("Cannot find the member linked the specified id");
+        //    return member;
+        //}
 
         [HttpPost]
         public async Task<Member> AddMember(AddMemberRequest request)

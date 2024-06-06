@@ -1,18 +1,25 @@
 ﻿using CleanArchitecture.Application.Common.Interfaces;
 using CleanArchitecture.Domain;
+using FluentValidation;
 using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.Members.Commands.AddMember
 {
-    public class AddMemberCommandHandler(IMemberRepository _memberRepository) : IRequestHandler<AddMemberCommand, Member>
+    public class AddMemberCommandHandler(IMemberRepository _memberRepository
+           ,IValidator<AddMemberCommand> _validator) 
+        : IRequestHandler<AddMemberCommand, Member>
     {
         public async Task<Member> Handle(AddMemberCommand request, CancellationToken cancellationToken)
         {
+
+            _validator.ValidateAndThrow(request);
+
 
             Member member = new()
             {
