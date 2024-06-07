@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CleanArchitecture.Application;
 using Microsoft.Extensions.Logging;
+using CleanArchitecture.Application.Common.Behaviors;
+using Exceptions;
 
 namespace CleanArchitecture.Api.Middlewares
 {
@@ -22,23 +24,40 @@ namespace CleanArchitecture.Api.Middlewares
             }
             catch (Exceptions.ValidationException exception)
             {
-                var problemDetails = new ProblemDetails
-                {
-                    Status = StatusCodes.Status400BadRequest,
-                    Type = "ValidationFailure",
-                    Title = "Validation error",
-                    Detail = "One or more validation errors has occurred"
-                };
+                await HandleValidationException(context, exception);
+            }
+            catch (Exception exception) 
+            {
+                await context.Response.WriteAsJsonAsync(exception);
+            }
+        }
 
-                if (exception.errors is not null)
+
+        private static Task HandleValidationException(HttpContext context , ValidationException exception)
+        {
+            var problemDetails = new ProblemDetails
+            {
+                Status = StatusCodes.Status400BadRequest,
+                Type = "ValidationFailure",
+                Title = "Validation error",
+                Detail = "One or more validation errors has occurred",
+            };
+
+            if (exception.errors is not null)
+            {
+                var errorList = new List<ValidationError>();
+
+                foreach (ValidationError err in (dynamic)exception.errors)
                 {
-                    problemDetails.Extensions["errors"] = exception.errors;
+                    errorList.Add(err);       
                 }
 
-                context.Response.StatusCode = StatusCodes.Status400BadRequest;
-
-                await context.Response.WriteAsJsonAsync(problemDetails);
+                problemDetails.Extensions["errors"] = errorList;
             }
+
+            context.Response.StatusCode = StatusCodes.Status400BadRequest;
+
+            return context.Response.WriteAsJsonAsync(problemDetails);
         }
     }
 }

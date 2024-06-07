@@ -9,6 +9,7 @@ namespace Exceptions
 
         public ValidationException()
         {
+            this.errors = new object();
         }
 
         public ValidationException(object errors)

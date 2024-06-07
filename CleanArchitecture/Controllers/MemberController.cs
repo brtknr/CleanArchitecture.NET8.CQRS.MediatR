@@ -12,43 +12,6 @@ namespace CleanArchitecture.Controllers
     [Route("[controller]/[action]")]
     public class MemberController(ISender _mediator) : ControllerBase
     {
-        private readonly List<Member> MemberList = new List<Member>() 
-        {
-            new Member()
-            {
-                Id = 1,
-                FirstName = "Test",
-                LastName = "Test",
-                PhoneNumber = "050500350323",
-                CreatedDate = DateTime.Now,
-            },
-            new Member()
-            {
-                Id = 2,
-                FirstName = "Test2",
-                LastName = "Test2",
-                PhoneNumber = "023500350323",
-                CreatedDate = DateTime.Now,
-
-            },
-            new Member()
-            {
-                Id = 3,
-                FirstName = "Test3",
-                LastName = "Test3",
-                PhoneNumber = "050545350323",
-                CreatedDate = DateTime.Now,
-            },
-            new Member()
-            {
-                Id = 4,
-                FirstName = "Test4",
-                LastName = "Test4",
-                PhoneNumber = "011500350323",
-                CreatedDate = DateTime.Now
-            }
-        }; 
-
     
         [HttpGet]
         public async Task<IEnumerable<Member>> GetAllMembers()
