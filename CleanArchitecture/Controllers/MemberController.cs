@@ -5,6 +5,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using CleanArchitecture.Application.Members.Commands.AddMember;
 using System.Net;
+using CleanArchitecture.Contracts.Member;
 
 namespace CleanArchitecture.Controllers
 {
@@ -20,16 +21,8 @@ namespace CleanArchitecture.Controllers
             return await _mediator.Send(query);
         }
 
-        //[HttpGet]
-        //public Member GetMemberById(int id)
-        //{
-        //    var member = MemberList.FirstOrDefault(x => x.Id == id);
-        //    if (member == null) throw new Exception("Cannot find the member linked the specified id");
-        //    return member;
-        //}
-
         [HttpPost]
-        public async Task<Member> AddMember(AddMemberRequest request)
+        public async Task<MemberResponse> AddMember(Contracts.AddMemberRequest request)
         {
             var command = new AddMemberCommand(request.FirstName,
                                                 request.LastName,
@@ -39,8 +32,14 @@ namespace CleanArchitecture.Controllers
                                                 );
 
             var result = await _mediator.Send(command);
-            return result;
+
+
+            return new(result.FirstName, result.LastName, result.Email, result.PhoneNumber, result.Address);
         }
+
+        
+
+
 
 
     }

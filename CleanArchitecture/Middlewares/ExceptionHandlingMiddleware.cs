@@ -6,11 +6,11 @@ using Exceptions;
 
 namespace CleanArchitecture.Api.Middlewares
 {
-    public sealed class ValidationExceptionHandlingMiddleware
+    public sealed class ExceptionHandlingMiddleware
     {
         private readonly RequestDelegate _next;
 
-        public ValidationExceptionHandlingMiddleware(RequestDelegate next)
+        public ExceptionHandlingMiddleware(RequestDelegate next)
         {
             _next = next;
             //_logger = logger;

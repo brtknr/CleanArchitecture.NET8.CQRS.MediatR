@@ -43,7 +43,7 @@ namespace CleanArchitecture.Application.Common.Behaviors
             }
 
             var response = await next();
-
+            
             return response;
         }
     }
