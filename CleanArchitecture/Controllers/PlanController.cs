@@ -1,4 +1,5 @@
 ﻿using CleanArchitecture.Application.Members.Queries.ListMembers;
+using CleanArchitecture.Application.Plans.Commands.CreatePlan;
 using CleanArchitecture.Application.Plans.Queries.ListPlans;
 using CleanArchitecture.Contracts.Plan;
 using CleanArchitecture.Domain;
@@ -20,11 +21,28 @@ namespace CleanArchitecture.Api.Controllers
             return await _mediator.Send(query);
         }
 
-        //[HttpPost]
-        //public async Task<PlanResponse> Create(CreatePlanRequest request)
-        //{
-        //    await return new PlanResponse();
-        //}
+        [HttpPost]
+        public async Task<PlanResponse> CreatePlan(CreatePlanRequest request)
+        {
+
+            CreatePlanCommand command = new(request.title,
+                                            request.totalDays,
+                                            request.price,
+                                            request.startDate,
+                                            request.endDate,
+                                            request.maxMemberCount,
+                                            request.isPermanent); 
+
+            var result = await _mediator.Send(command);
+
+            return new(request.title,
+                               request.price,
+                               request.isPermanent,
+                               request.maxMemberCount,
+                               request.startDate,
+                               request.endDate,
+                               request.totalDays);
+        }
 
 
     }

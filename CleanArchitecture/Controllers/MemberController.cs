@@ -22,7 +22,7 @@ namespace CleanArchitecture.Controllers
         }
 
         [HttpPost]
-        public async Task<MemberResponse> AddMember(Contracts.AddMemberRequest request)
+        public async Task<MemberResponse> AddMember(AddMemberRequest request)
         {
             var command = new AddMemberCommand(request.FirstName,
                                                 request.LastName,

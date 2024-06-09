@@ -22,7 +22,7 @@ namespace CleanArchitecture.Api.Middlewares
             {
                 await _next(context);
             }
-            catch (Exceptions.ValidationException exception)
+            catch (ValidationException exception)
             {
                 await HandleValidationException(context, exception);
             }
