@@ -1,17 +1,13 @@
 ﻿using CleanArchitecture.Application.Memberships.Commands.CreateMembership;
 using CleanArchitecture.Application.Memberships.Queries.ListMemberships;
-using CleanArchitecture.Application.Plans.Commands.CreatePlan;
-using CleanArchitecture.Application.Plans.Queries.ListPlans;
 using CleanArchitecture.Contracts.Membership;
-using CleanArchitecture.Contracts.Plan;
 using CleanArchitecture.Domain;
 using MediatR;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchitecture.Api.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("[controller]/[action]")]
     [ApiController]
     public class MembershipController(ISender _mediator) : ControllerBase
     {

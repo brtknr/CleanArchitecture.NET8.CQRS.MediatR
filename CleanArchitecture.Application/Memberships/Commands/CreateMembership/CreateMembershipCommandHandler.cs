@@ -15,8 +15,6 @@ namespace CleanArchitecture.Application.Memberships.Commands.CreateMembership
     {                                                                                  
         public async Task<CreateMembershipResponse> Handle(CreateMembershipCommand request, CancellationToken cancellationToken)
         {
-            // to-do: link the given id s each other . memberid , planid => membership relations . 
-
 
             var member = memberRepository.GetByIdAsync(request.memberId).Result;
             var plan = planRepository.GetByIdAsync(request.planId).Result;
@@ -27,7 +25,8 @@ namespace CleanArchitecture.Application.Memberships.Commands.CreateMembership
                                     {
                                         MemberId = request.memberId,
                                         PlanId = request.planId,
-                                        StartDate = request.startDate
+                                        StartDate = request.startDate,
+                                        EndDate = request.startDate.AddDays(plan.TotalDays)
                                     };
 
 
