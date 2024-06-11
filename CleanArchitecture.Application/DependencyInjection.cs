@@ -21,7 +21,7 @@ namespace CleanArchitecture.Application
 
             });
 
-            services.AddValidatorsFromAssemblyContaining(typeof(AddMemberCommandValidator));
+            services.AddValidatorsFromAssemblyContaining(typeof(CreateMembershipCommandValidator));
            
             return services;
         }
