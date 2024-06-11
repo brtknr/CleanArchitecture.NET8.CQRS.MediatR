@@ -22,8 +22,8 @@ namespace CleanArchitecture.Api.Controllers
         public async Task<MembershipResponse> CreateMembership(CreateMembershipRequest request)
         {
 
-            CreateMembershipCommand command = new(request.memberId,
-                                            request.planId,
+            CreateMembershipCommand command = new(Convert.ToInt32(request.memberId),
+                                            Convert.ToInt32(request.planId),
                                             request.startDate);
 
             var result = await _mediator.Send(command);

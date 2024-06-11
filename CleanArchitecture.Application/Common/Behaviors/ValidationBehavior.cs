@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,12 @@ namespace CleanArchitecture.Application.Common.Behaviors
         where TRequest : class
     {
         private readonly IEnumerable<IValidator<TRequest>> _validators;
+        private readonly ILogger<ValidationBehavior<TRequest, TResponse>> _logger;
 
-        public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators)
+        public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators, ILogger<ValidationBehavior<TRequest, TResponse>> logger)
         {
             _validators = validators;
+            _logger = logger;
         }
 
         public async Task<TResponse> Handle(
@@ -39,6 +42,7 @@ namespace CleanArchitecture.Application.Common.Behaviors
 
             if (errors.Any())
             {
+                _logger.LogError("Validation errors have occured {@errors}.", errors);
                 throw new Exceptions.ValidationException(errors);
             }
 

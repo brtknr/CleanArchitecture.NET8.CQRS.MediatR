@@ -28,7 +28,7 @@ namespace CleanArchitecture.Api.Middlewares
             }
             catch (Exception exception) 
             {
-                await context.Response.WriteAsJsonAsync(exception);
+                await context.Response.WriteAsJsonAsync(exception.Message);
             }
         }
 

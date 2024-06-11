@@ -7,6 +7,6 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Contracts.Membership
 {
-    public record CreateMembershipRequest(int memberId,int planId,DateTime startDate);
+    public record CreateMembershipRequest(string memberId,string planId,DateTime startDate);
     
 }

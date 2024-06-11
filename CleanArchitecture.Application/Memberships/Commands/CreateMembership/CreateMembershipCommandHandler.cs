@@ -1,9 +1,12 @@
-﻿using CleanArchitecture.Application.Common.Interfaces;
+﻿using CleanArchitecture.Application.Common.Behaviors;
+using CleanArchitecture.Application.Common.Interfaces;
 using CleanArchitecture.Domain;
+using FluentValidation.Results;
 using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,7 +22,13 @@ namespace CleanArchitecture.Application.Memberships.Commands.CreateMembership
             var member = memberRepository.GetByIdAsync(request.memberId).Result;
             var plan = planRepository.GetByIdAsync(request.planId).Result;
 
-            if (member == null || plan == null) throw new Exception("Member or plan is not found."); // TO DO : fix 
+            if (member == null || plan == null) 
+            {
+                var errorList = new List<ValidationError>();
+                errorList.Add(new ValidationError("Plan,Member", "Plan or member is not found."));
+                throw new Exceptions.ValidationException(errorList);
+                
+            } 
 
             Membership membership = new()
                                     {
@@ -28,7 +37,6 @@ namespace CleanArchitecture.Application.Memberships.Commands.CreateMembership
                                         StartDate = request.startDate,
                                         EndDate = request.startDate.AddDays(plan.TotalDays)
                                     };
-
 
             await membershipRepository.AddAsync(membership);
             await memberRepository.SaveAsync();
