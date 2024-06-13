@@ -11,16 +11,12 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.Members.Commands.AddMember
 {
-    public class AddMemberCommandHandler(IMemberRepository _memberRepository
-           ,IValidator<AddMemberCommand> _validator) 
-        : IRequestHandler<AddMemberCommand, Member>
+    public class AddMemberCommandHandler(IUnitOfWork _uow) : IRequestHandler<AddMemberCommand, Member>
     {
         public async Task<Member> Handle(AddMemberCommand request, CancellationToken cancellationToken)
         {
 
-            //_validator.ValidateAndThrow(request);
-
-
+   
             Member member = new()
             {
                 FirstName = request.FirstName,
@@ -30,8 +26,8 @@ namespace CleanArchitecture.Application.Members.Commands.AddMember
                 PhoneNumber = request.PhoneNumber,
             };
 
-            var result = await _memberRepository.AddAsync(member);
-            await _memberRepository.SaveAsync();
+            var result = await _uow.MemberRepository.AddAsync(member);
+            await _uow.MemberRepository.SaveAsync();
             
             if (result) return member;
             throw new Exception("Something went wrong!");

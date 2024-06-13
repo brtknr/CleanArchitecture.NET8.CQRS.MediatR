@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.Memberships.Queries.ListMemberships
 {
-    public class ListMembershipsQueryHandler(IMembershipRepository membershipRepository) : IRequestHandler<ListMembershipsQuery, List<Membership>>
+    public class ListMembershipsQueryHandler(IUnitOfWork _uow) : IRequestHandler<ListMembershipsQuery, List<Membership>>
     {
         public async Task<List<Membership>> Handle(ListMembershipsQuery request, CancellationToken cancellationToken)
         {
-            return await membershipRepository.GetAllAsync();
+            return await _uow.MembershipRepository.GetAllAsync();
         }
     }
 }

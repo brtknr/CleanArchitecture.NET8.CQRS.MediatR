@@ -25,12 +25,10 @@ namespace CleanArchitecture.Api.Middlewares
             }
             catch (ValidationException exception)
             {
-                //_logger.LogError("Validation error : {@errors}", exception.Message);
                 await HandleValidationException(context, exception);
             }
             catch (Exception exception) 
             {
-                _logger.LogError("Error has occured : {@errors}", exception.Message);
                 await context.Response.WriteAsJsonAsync(exception.Message);
             }
         }

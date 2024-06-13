@@ -19,10 +19,5 @@ namespace CleanArchitecture.Infrastructure.Persistence
             _context = context;
         }
 
-        //public async Task<int> GetMemberActiveDays(Member member)
-        //{
-            
-        //    throw new NotImplementedException();
-        //}
     }
 }

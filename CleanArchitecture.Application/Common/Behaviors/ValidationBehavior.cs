@@ -42,7 +42,7 @@ namespace CleanArchitecture.Application.Common.Behaviors
 
             if (errors.Any())
             {
-                //_logger.LogError("Validation errors have occured {@errors}.", errors);
+                _logger.LogError("Validation errors have occured {@errors}.", errors);
                 throw new Exceptions.ValidationException(errors);
             }
 

@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
     .WriteTo.Console()
+    //.WriteTo.Seq(,)
     .WriteTo.File("logs/log-.txt",rollingInterval:RollingInterval.Day)
     .CreateLogger();
 

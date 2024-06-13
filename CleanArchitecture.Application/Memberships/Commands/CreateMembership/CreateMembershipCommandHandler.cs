@@ -12,15 +12,13 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.Memberships.Commands.CreateMembership
 {
-    public class CreateMembershipCommandHandler(IMembershipRepository membershipRepository,
-                                                IMemberRepository memberRepository,
-                                                IPlanRepository planRepository) : IRequestHandler<CreateMembershipCommand, CreateMembershipResponse>
+    public class CreateMembershipCommandHandler(IUnitOfWork _uow) : IRequestHandler<CreateMembershipCommand, CreateMembershipResponse>
     {                                                                                  
         public async Task<CreateMembershipResponse> Handle(CreateMembershipCommand request, CancellationToken cancellationToken)
         {
 
-            var member = memberRepository.GetByIdAsync(request.memberId).Result;
-            var plan = planRepository.GetByIdAsync(request.planId).Result;
+            var member = _uow.MemberRepository.GetByIdAsync(request.memberId).Result;
+            var plan = _uow.PlanRepository.GetByIdAsync(request.planId).Result;
 
             if (member == null || plan == null) 
             {
@@ -38,8 +36,8 @@ namespace CleanArchitecture.Application.Memberships.Commands.CreateMembership
                                         EndDate = request.startDate.AddDays(plan.TotalDays)
                                     };
 
-            await membershipRepository.AddAsync(membership);
-            await memberRepository.SaveAsync();
+            await _uow.MembershipRepository.AddAsync(membership);
+            await _uow.MembershipRepository.SaveAsync();
 
             return new(member.FirstName,
                        member.LastName,

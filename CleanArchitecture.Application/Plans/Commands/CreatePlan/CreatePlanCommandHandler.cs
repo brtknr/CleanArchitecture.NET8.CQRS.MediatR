@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.Plans.Commands.CreatePlan
 {
-    public class CreatePlanCommandHandler(IPlanRepository _planRepository) : IRequestHandler<CreatePlanCommand, Plan>
+    public class CreatePlanCommandHandler(IUnitOfWork _uow) : IRequestHandler<CreatePlanCommand, Plan>
     {
         public async Task<Plan> Handle(CreatePlanCommand request, CancellationToken cancellationToken)
         {
@@ -24,8 +24,8 @@ namespace CleanArchitecture.Application.Plans.Commands.CreatePlan
                 Price = request.price,
             };
 
-            var result = await _planRepository.AddAsync(plan);
-            await _planRepository.SaveAsync();
+            var result = await _uow.PlanRepository.AddAsync(plan);
+            await _uow.PlanRepository.SaveAsync();
             if (result) return plan;
 
             throw new Exception("Something went wrong!");

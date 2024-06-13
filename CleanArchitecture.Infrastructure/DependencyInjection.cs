@@ -33,6 +33,7 @@ namespace CleanArchitecture.Infrastructure
             services.AddScoped<IExerciseRepository, ExerciseRepository>();
             services.AddScoped<IWorkoutRepository, WorkoutRepository>();
             services.AddScoped<IPlanRepository, PlanRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;
         }

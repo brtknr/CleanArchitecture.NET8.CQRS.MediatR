@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace CleanArchitecture.Application.Members.Queries.ListMembers
 {
-    public class ListMembersQueryHandler(IMemberRepository _memberRepository) : IRequestHandler<ListMembersQuery, List<Member>>
+    public class ListMembersQueryHandler(IUnitOfWork _uow) : IRequestHandler<ListMembersQuery, List<Member>>
     {
         public async Task<List<Member>> Handle(ListMembersQuery request, CancellationToken cancellationToken)
         {
-            return await _memberRepository.GetAllAsync();
+            return await _uow.MemberRepository.GetAllAsync();
         }
     }
 }
