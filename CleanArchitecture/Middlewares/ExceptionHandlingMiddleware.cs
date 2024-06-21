@@ -3,6 +3,7 @@ using CleanArchitecture.Application;
 using Microsoft.Extensions.Logging;
 using CleanArchitecture.Application.Common.Behaviors;
 using Exceptions;
+using CleanArchitecture.Application.Errors;
 
 namespace CleanArchitecture.Api.Middlewares
 {

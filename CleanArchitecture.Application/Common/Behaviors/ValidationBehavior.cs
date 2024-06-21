@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using CleanArchitecture.Application.Errors;
+using FluentValidation;
 using MediatR;
 using Microsoft.Extensions.Logging;
 using System;
