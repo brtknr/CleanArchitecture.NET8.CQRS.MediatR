@@ -17,10 +17,17 @@ namespace CleanArchitecture.Application.Members.Queries.ListMembers
 
         public async Task<List<Member>> Handle(ListMembersQuery request, CancellationToken cancellationToken)
         {
-            cacheService.TryGetValue("surname", out string? surnameValue);
+            
+            if(cacheService.TryGetValue("surname", out string? surnameValue))
+            {
+                // return data from cache
+            }
+            else
+            {
+                // fetch data from db . store it to cache and return to presentation.
+            }
 
-            //await cacheService.SetAsync("surname", "kanar");
-
+            
             return await _uow.MemberRepository.GetAllAsync();
         }
     }
