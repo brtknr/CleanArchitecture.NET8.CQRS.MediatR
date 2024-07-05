@@ -30,6 +30,7 @@ namespace CleanArchitecture.Api.Middlewares
             }
             catch (Exception exception) 
             {
+                _logger.LogError(exception.Message);
                 await context.Response.WriteAsJsonAsync(exception.Message);
             }
         }

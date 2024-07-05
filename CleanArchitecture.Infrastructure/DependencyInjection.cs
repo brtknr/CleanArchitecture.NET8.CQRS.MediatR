@@ -1,6 +1,8 @@
 ﻿using CleanArchitecture.Application.Common.Interfaces;
+using CleanArchitecture.Application.Common.Services;
 using CleanArchitecture.Infrastructure.Common.Persistence;
 using CleanArchitecture.Infrastructure.Persistence;
+using CleanArchitecture.Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,7 +29,7 @@ namespace CleanArchitecture.Infrastructure
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("GymDb"))
                 );
-
+            
             services.AddScoped<IMemberRepository,MemberRepository>();
             services.AddScoped<IMembershipRepository, MembershipRepository>();
             services.AddScoped<IExerciseRepository, ExerciseRepository>();
@@ -35,6 +37,8 @@ namespace CleanArchitecture.Infrastructure
             services.AddScoped<IPlanRepository, PlanRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
+            services.AddSingleton<ICacheService, CacheService>();
+            
             return services;
         }
     }

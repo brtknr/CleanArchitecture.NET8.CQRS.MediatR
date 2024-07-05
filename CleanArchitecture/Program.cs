@@ -2,6 +2,7 @@ using CleanArchitecture.Api.Middlewares;
 using CleanArchitecture.Application;
 using CleanArchitecture.Infrastructure;
 using Serilog;
+using StackExchange.Redis;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,10 +15,16 @@ Log.Logger = new LoggerConfiguration()
     .WriteTo.File("logs/log-.txt",rollingInterval:RollingInterval.Day)
     .CreateLogger();
 
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration["ConnectionStrings:Redis"];
+    //options.InstanceName = "SampleInstance";
+});
+
 builder.Services.AddSerilog();
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

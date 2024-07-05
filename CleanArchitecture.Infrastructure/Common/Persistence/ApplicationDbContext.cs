@@ -35,9 +35,9 @@ namespace CleanArchitecture.Infrastructure.Common.Persistence
                     EntityState.Modified => data.Entity.UpdatedDate = DateTime.UtcNow,
                 };
             }
-
-
+            
             return await base.SaveChangesAsync(cancellationToken);
         }
+
     }
 }

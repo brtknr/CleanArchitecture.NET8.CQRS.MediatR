@@ -1,5 +1,6 @@
 ﻿using CleanArchitecture.Application.Common.Behaviors;
 using CleanArchitecture.Application.Common.Interfaces;
+using CleanArchitecture.Application.Errors;
 using CleanArchitecture.Domain;
 using FluentValidation.Results;
 using MediatR;
@@ -19,13 +20,12 @@ namespace CleanArchitecture.Application.Memberships.Commands.CreateMembership
 
             var member = _uow.MemberRepository.GetByIdAsync(request.memberId).Result;
             var plan = _uow.PlanRepository.GetByIdAsync(request.planId).Result;
-
+            
             if (member == null || plan == null) 
             {
                 var errorList = new List<ValidationError>();
                 errorList.Add(new ValidationError("Plan,Member", "Plan or member is not found."));
-                throw new Exceptions.ValidationException(errorList);
-                
+                throw new Exceptions.ValidationException(errorList);  
             } 
 
             Membership membership = new()
