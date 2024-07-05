@@ -17,9 +17,9 @@ namespace CleanArchitecture.Application.Members.Queries.ListMembers
 
         public async Task<List<Member>> Handle(ListMembersQuery request, CancellationToken cancellationToken)
         {
-            cacheService.TryGetValue("name", out string? nameValue);
-            
+            cacheService.TryGetValue("surname", out string? surnameValue);
 
+            //await cacheService.SetAsync("surname", "kanar");
 
             return await _uow.MemberRepository.GetAllAsync();
         }
