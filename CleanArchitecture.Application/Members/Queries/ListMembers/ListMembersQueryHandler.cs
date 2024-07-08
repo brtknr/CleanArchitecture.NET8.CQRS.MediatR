@@ -2,6 +2,7 @@
 using CleanArchitecture.Application.Common.Services;
 using CleanArchitecture.Domain;
 using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,17 +19,19 @@ namespace CleanArchitecture.Application.Members.Queries.ListMembers
         public async Task<List<Member>> Handle(ListMembersQuery request, CancellationToken cancellationToken)
         {
             
-            if(cacheService.TryGetValue("surname", out string? surnameValue))
+            if(cacheService.TryGetValue("memberList", out List<Member>? memberList))
             {
-                // return data from cache
+                return memberList;
             }
             else
             {
-                // fetch data from db . store it to cache and return to presentation.
-            }
+                var members = await _uow.MemberRepository.GetAllAsync();
+                
+                await cacheService.SetAsync("memberList", members,new DistributedCacheEntryOptions() { SlidingExpiration = TimeSpan.FromMinutes(30) });
 
-            
-            return await _uow.MemberRepository.GetAllAsync();
+                return members;
+
+            }
         }
     }
 }

@@ -45,15 +45,5 @@ namespace CleanArchitecture.Infrastructure.Services
             DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
         };
 
-        //private static JsonSerializerOptions GetJsonSerializerOptions()
-        //{
-        //    return new JsonSerializerOptions()
-        //    {
-        //        PropertyNamingPolicy = null,
-        //        WriteIndented = true,
-        //        AllowTrailingCommas = true,
-        //        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-        //    };
-        //}
     }
 }
