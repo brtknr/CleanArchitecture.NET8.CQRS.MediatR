@@ -14,26 +14,63 @@ namespace CleanArchitecture.Infrastructure.Services
 {
     public class CacheService(IDistributedCache cache) : ICacheService
     {
-        public Task SetAsync<T>(string key, T value)
+        private static readonly DistributedCacheEntryOptions Default = new()
         {
-            return SetAsync(key, value, new DistributedCacheEntryOptions());
-        }
+            AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30),
+        };
 
-        public Task SetAsync<T>(string key, T value, DistributedCacheEntryOptions options)
+        private static readonly SemaphoreSlim Semaphore = new(1, 1);
+
+        public async Task<T?> GetOrCreateAsync<T>(
+            string key,
+            Func<CancellationToken,Task<T>> factory,
+            DistributedCacheEntryOptions? options = null,
+            CancellationToken cancellationToken = default)
         {
-            var bytes = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(value, _serializerOptions));
-            return cache.SetAsync(key, bytes, options);
-        }
+            var cachedValue = await cache.GetStringAsync(key, cancellationToken);
 
-        public bool TryGetValue<T>(string key, out T? value)
-        {
-            var val = cache.Get(key);
-            value = default;
+            T? value;
+            if (!string.IsNullOrWhiteSpace(cachedValue))
+            {
+                value = JsonSerializer.Deserialize<T>(cachedValue);
+                
+                if (value != null)
+                {
+                    return value;
+                }
+            }
 
-            if (val == null) return false;
-            value = JsonSerializer.Deserialize<T>(val, _serializerOptions);
+            var hasLock = await Semaphore.WaitAsync(5000);
+
+            if (!hasLock)
+            {
+                return default;
+            }
+             // stampede protection by using semaphore
+            try
+            {
+                cachedValue = await cache.GetStringAsync(key, cancellationToken);
+                if (!string.IsNullOrWhiteSpace(cachedValue))
+                {
+                    value = JsonSerializer.Deserialize<T>(cachedValue);
+
+                    if (value != null)
+                    {
+                        return value;
+                    }
+                }
+
+                value = await factory(cancellationToken);
+                if (value is null) return default;
+
+                await cache.SetStringAsync(key, JsonSerializer.Serialize(value), options ?? Default, cancellationToken);
+            }
+            finally
+            {
+                Semaphore.Release();
+            }
             
-            return true;
+            return value;
         }
 
 

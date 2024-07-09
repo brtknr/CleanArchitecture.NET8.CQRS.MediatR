@@ -9,8 +9,11 @@ namespace CleanArchitecture.Application.Common.Services
 {
     public interface ICacheService
     {
-        Task SetAsync<T>(string key, T value);
-        Task SetAsync<T>(string key, T value, DistributedCacheEntryOptions options);
-        bool TryGetValue<T>(string key, out T? value);
+        Task<T?> GetOrCreateAsync<T>(
+            string key,
+            Func<CancellationToken, Task<T>> factory,
+            DistributedCacheEntryOptions? options = null,
+            CancellationToken cancellationToken = default);
+
     }
 }

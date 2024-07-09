@@ -2,6 +2,7 @@
 using CleanArchitecture.Application.Common.Services;
 using CleanArchitecture.Domain;
 using MediatR;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.Extensions.Caching.Distributed;
 using System;
 using System.Collections.Generic;
@@ -18,20 +19,16 @@ namespace CleanArchitecture.Application.Members.Queries.ListMembers
 
         public async Task<List<Member>> Handle(ListMembersQuery request, CancellationToken cancellationToken)
         {
-            
-            if(cacheService.TryGetValue("memberList", out List<Member>? memberList))
+            string key = "members";
+
+            List<Member>? members = await cacheService.GetOrCreateAsync(key, async token =>
             {
+                var memberList = await _uow.MemberRepository.GetAllAsync();
+
                 return memberList;
-            }
-            else
-            {
-                var members = await _uow.MemberRepository.GetAllAsync();
-                
-                await cacheService.SetAsync("memberList", members,new DistributedCacheEntryOptions() { SlidingExpiration = TimeSpan.FromMinutes(30) });
+            });
 
-                return members;
-
-            }
+            return members ?? new();
         }
     }
 }
