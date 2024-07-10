@@ -1,4 +1,5 @@
 ﻿using CleanArchitecture.Application.Common.Behaviors;
+using CleanArchitecture.Application.Common.Filters;
 using CleanArchitecture.Application.Members.Commands.AddMember;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +24,11 @@ namespace CleanArchitecture.Application
             });
 
             services.AddValidatorsFromAssemblyContaining(typeof(CreateMembershipCommandValidator));
+
+            services.AddControllers(options =>
+            {
+                //options.Filters.Add(new InvalidateCacheFilter());
+            });
 
             return services;
         }

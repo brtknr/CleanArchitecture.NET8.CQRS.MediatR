@@ -1,4 +1,5 @@
-﻿using CleanArchitecture.Application.Memberships.Commands.CreateMembership;
+﻿using CleanArchitecture.Application.Common.Filters;
+using CleanArchitecture.Application.Memberships.Commands.CreateMembership;
 using CleanArchitecture.Application.Memberships.Queries.ListMemberships;
 using CleanArchitecture.Contracts.Membership;
 using CleanArchitecture.Domain;
@@ -19,6 +20,7 @@ namespace CleanArchitecture.Api.Controllers
         }
 
         [HttpPost]
+        [TypeFilter(typeof(InvalidateCacheFilterAsync), Arguments = new object[] { "memberships" })]
         public async Task<MembershipResponse> CreateMembership(CreateMembershipRequest request)
         {
 
@@ -34,7 +36,7 @@ namespace CleanArchitecture.Api.Controllers
                                result.endDate,
                                result.remainingDaysCount);
         }
-
+        
 
 
     }

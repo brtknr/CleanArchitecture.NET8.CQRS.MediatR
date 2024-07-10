@@ -1,4 +1,5 @@
-﻿using CleanArchitecture.Application.Members.Queries.ListMembers;
+﻿using CleanArchitecture.Application.Common.Filters;
+using CleanArchitecture.Application.Members.Queries.ListMembers;
 using CleanArchitecture.Application.Plans.Commands.CreatePlan;
 using CleanArchitecture.Application.Plans.Queries.ListPlans;
 using CleanArchitecture.Contracts.Plan;
@@ -22,6 +23,7 @@ namespace CleanArchitecture.Api.Controllers
         }
 
         [HttpPost]
+        [TypeFilter(typeof(InvalidateCacheFilterAsync), Arguments = new object[] { "plans" })]
         public async Task<PlanResponse> CreatePlan(CreatePlanRequest request)
         {
 

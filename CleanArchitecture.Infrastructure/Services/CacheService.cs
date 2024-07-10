@@ -73,6 +73,11 @@ namespace CleanArchitecture.Infrastructure.Services
             return value;
         }
 
+        public async Task RemoveKeyAsync(string key)
+        {
+            await cache.RemoveAsync(key);
+        }
+
 
         private static JsonSerializerOptions _serializerOptions = new JsonSerializerOptions
         {

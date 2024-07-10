@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using CleanArchitecture.Application.Members.Commands.AddMember;
 using System.Net;
 using CleanArchitecture.Contracts.Member;
+using CleanArchitecture.Application.Common.Filters;
+using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace CleanArchitecture.Controllers
 {
@@ -22,6 +24,7 @@ namespace CleanArchitecture.Controllers
         }
 
         [HttpPost]
+        [TypeFilter(typeof(InvalidateCacheFilterAsync), Arguments = new object[] { "members" })] // invalidates given key by removing it from cache
         public async Task<MemberResponse> AddMember(AddMemberRequest request)
         {
             var command = new AddMemberCommand(request.FirstName,

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -14,6 +15,6 @@ namespace CleanArchitecture.Application.Common.Services
             Func<CancellationToken, Task<T>> factory,
             DistributedCacheEntryOptions? options = null,
             CancellationToken cancellationToken = default);
-
+        Task RemoveKeyAsync(string key); 
     }
 }
