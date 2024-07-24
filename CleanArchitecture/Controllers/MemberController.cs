@@ -8,18 +8,33 @@ using System.Net;
 using CleanArchitecture.Contracts.Member;
 using CleanArchitecture.Application.Common.Filters;
 using Microsoft.AspNetCore.Mvc.Filters;
+using RabbitMQ.Client;
+using CleanArchitecture.Infrastructure.Common.RabbitMQ;
 
 namespace CleanArchitecture.Controllers
 {
     [ApiController]
     [Route("[controller]/[action]")]
-    public class MemberController(ISender _mediator) : ControllerBase
+    public class MemberController(ISender _mediator,IPublisherService _publisherService) : ControllerBase
     {
     
         [HttpGet]
         public async Task<IEnumerable<Member>> GetAllMembers()
         {
             var query = new ListMembersQuery();
+
+
+            #region RabbitMQ Test
+
+            var membershipList = new List<Membership>();
+            membershipList.Add(new() { Id = 8, MemberId = 2, PlanId = 7 });
+
+            _publisherService.Enqueue(membershipList, "test_queue", "forecast_exchange", ExchangeType.Direct, "");
+
+
+            #endregion
+
+
             return await _mediator.Send(query);
         }
 

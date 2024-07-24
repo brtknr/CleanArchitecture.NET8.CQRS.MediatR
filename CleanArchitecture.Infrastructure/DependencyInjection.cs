@@ -1,8 +1,12 @@
 ﻿using CleanArchitecture.Application.Common.Interfaces;
 using CleanArchitecture.Application.Common.Services;
 using CleanArchitecture.Infrastructure.Common.Persistence;
+using CleanArchitecture.Infrastructure.Common.RabbitMQ;
+using CleanArchitecture.Infrastructure.Common.RabbitMQ.Configuration;
+using CleanArchitecture.Infrastructure.Common.RabbitMQ.Conversion;
 using CleanArchitecture.Infrastructure.Persistence;
 using CleanArchitecture.Infrastructure.Services;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,6 +23,16 @@ namespace CleanArchitecture.Infrastructure
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddPersistence(configuration);
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.None;
+            });
+
+            services.AddScoped<IRabbitMQService, RabbitMQService>();
+            services.AddScoped<IRabbitMQConfiguration, RabbitMQConfiguration>();
+            services.AddScoped<IObjectConvertFormat, ObjectConvertFormat>();
+            services.AddScoped<IPublisherService, PublisherService>();
 
             return services;
         }

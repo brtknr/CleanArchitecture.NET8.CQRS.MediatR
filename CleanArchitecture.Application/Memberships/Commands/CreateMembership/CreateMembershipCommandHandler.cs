@@ -39,6 +39,8 @@ namespace CleanArchitecture.Application.Memberships.Commands.CreateMembership
             await _uow.MembershipRepository.AddAsync(membership);
             await _uow.MembershipRepository.SaveAsync();
 
+
+
             return new(member.FirstName,
                        member.LastName,
                        plan.Title,

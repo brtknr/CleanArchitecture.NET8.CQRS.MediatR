@@ -40,7 +40,7 @@ namespace CleanArchitecture.Infrastructure.Services
                 }
             }
 
-            var hasLock = await Semaphore.WaitAsync(5000);
+            var hasLock = await Semaphore.WaitAsync(1000);
 
             if (!hasLock)
             {

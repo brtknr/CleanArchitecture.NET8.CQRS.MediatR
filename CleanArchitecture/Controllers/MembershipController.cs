@@ -3,19 +3,23 @@ using CleanArchitecture.Application.Memberships.Commands.CreateMembership;
 using CleanArchitecture.Application.Memberships.Queries.ListMemberships;
 using CleanArchitecture.Contracts.Membership;
 using CleanArchitecture.Domain;
+using CleanArchitecture.Infrastructure.Common.RabbitMQ;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using RabbitMQ.Client;
 
 namespace CleanArchitecture.Api.Controllers
 {
     [Route("[controller]/[action]")]
     [ApiController]
-    public class MembershipController(ISender _mediator) : ControllerBase
+    public class MembershipController(ISender _mediator,IPublisherService _publisherService) : ControllerBase
     {
         [HttpGet]
         public async Task<IEnumerable<Membership>> GetAllMemberships()
         {
             var query = new ListMembershipsQuery();
+
             return await _mediator.Send(query);
         }
 
@@ -29,6 +33,7 @@ namespace CleanArchitecture.Api.Controllers
                                             request.startDate);
 
             var result = await _mediator.Send(command);
+
 
             return new(result.memberFirstName + " " + result.memberLastName,
                                result.planTitle,

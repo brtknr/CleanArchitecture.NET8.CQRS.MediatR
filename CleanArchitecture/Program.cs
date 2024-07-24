@@ -1,3 +1,4 @@
+using CleanArchitecture.Api.BackgroundServices;
 using CleanArchitecture.Api.Middlewares;
 using CleanArchitecture.Application;
 using CleanArchitecture.Infrastructure;
@@ -22,6 +23,8 @@ builder.Services.AddStackExchangeRedisCache(options =>
 });
 
 builder.Services.AddSerilog();
+
+builder.Services.AddHostedService<MessageConsumer>();
 
 builder.Services.AddControllers();
 
