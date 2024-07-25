@@ -31,7 +31,6 @@ namespace CleanArchitecture.Controllers
 
             _publisherService.Enqueue(membershipList, "test_queue", "forecast_exchange", ExchangeType.Direct, "");
 
-
             #endregion
 
 

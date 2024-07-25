@@ -22,17 +22,18 @@ builder.Services.AddStackExchangeRedisCache(options =>
     //options.InstanceName = "SampleInstance";
 });
 
+//builder.Services.AddHostedService<MessageConsumer>();
 builder.Services.AddSerilog();
-
-builder.Services.AddHostedService<MessageConsumer>();
 
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+
 builder.Services.AddInfrastructure(builder.Configuration)
                 .AddApplication();
+
 
 var app = builder.Build();
 

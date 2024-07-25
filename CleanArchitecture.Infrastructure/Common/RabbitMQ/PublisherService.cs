@@ -51,6 +51,7 @@ namespace CleanArchitecture.Infrastructure.Common.RabbitMQ
                                          body: body);
                     
                 }
+
             }
 
         }
