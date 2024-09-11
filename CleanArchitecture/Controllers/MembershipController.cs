@@ -24,7 +24,7 @@ namespace CleanArchitecture.Api.Controllers
         }
 
         [HttpPost]
-        [TypeFilter(typeof(InvalidateCacheFilterAsync), Arguments = new object[] { "memberships" })]
+        //[TypeFilter(typeof(InvalidateCacheFilterAsync), Arguments = new object[] { "memberships" })]
         public async Task<MembershipResponse> CreateMembership(CreateMembershipRequest request)
         {
 

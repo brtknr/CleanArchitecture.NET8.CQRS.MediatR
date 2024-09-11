@@ -19,14 +19,16 @@ namespace CleanArchitecture.Application.Members.Queries.ListMembers
 
         public async Task<List<Member>> Handle(ListMembersQuery request, CancellationToken cancellationToken)
         {
-            string key = "members";
+            //string key = "members";
 
-            List<Member>? members = await cacheService.GetOrCreateAsync(key, async token =>
-            {
-                var memberList = await _uow.MemberRepository.GetAllAsync();
+            //List<Member>? members = await cacheService.GetOrCreateAsync(key, async token =>
+            //{
+            //    var memberList = await _uow.MemberRepository.GetAllAsync();
 
-                return memberList;
-            });
+            //    return memberList;
+            //});
+
+            List<Member> members = await _uow.MemberRepository.GetAllAsync();
 
             return members ?? new();
         }

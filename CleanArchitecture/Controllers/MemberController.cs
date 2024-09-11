@@ -38,7 +38,7 @@ namespace CleanArchitecture.Controllers
         }
 
         [HttpPost]
-        [TypeFilter(typeof(InvalidateCacheFilterAsync), Arguments = new object[] { "members" })] // invalidates given key by removing it from cache
+        //[TypeFilter(typeof(InvalidateCacheFilterAsync), Arguments = new object[] { "members" })] // invalidates given key by removing it from cache
         public async Task<MemberResponse> AddMember(AddMemberRequest request)
         {
             var command = new AddMemberCommand(request.FirstName,

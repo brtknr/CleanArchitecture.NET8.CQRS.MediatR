@@ -23,7 +23,7 @@ namespace CleanArchitecture.Api.Controllers
         }
 
         [HttpPost]
-        [TypeFilter(typeof(InvalidateCacheFilterAsync), Arguments = new object[] { "plans" })]
+        //[TypeFilter(typeof(InvalidateCacheFilterAsync), Arguments = new object[] { "plans" })]
         public async Task<PlanResponse> CreatePlan(CreatePlanRequest request)
         {
 

@@ -14,14 +14,16 @@ namespace CleanArchitecture.Application.Plans.Queries.ListPlans
     {
         public async Task<List<Plan>> Handle(ListPlansQuery request, CancellationToken cancellationToken)
         {
-            string key = "plans";
+            //string key = "plans";
 
-            List<Plan>? plans = await cacheService.GetOrCreateAsync(key, async token =>
-            {
-                var planList = await _uow.PlanRepository.GetAllAsync();
+            //List<Plan>? plans = await cacheService.GetOrCreateAsync(key, async token =>
+            //{
+            //    var planList = await _uow.PlanRepository.GetAllAsync();
 
-                return planList;
-            });
+            //    return planList;
+            //});
+
+            List<Plan> plans = await _uow.PlanRepository.GetAllAsync();
 
             return plans ?? new();
         }
