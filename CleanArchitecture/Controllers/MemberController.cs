@@ -26,10 +26,10 @@ namespace CleanArchitecture.Controllers
 
             #region RabbitMQ Test
 
-            var membershipList = new List<Membership>();
-            membershipList.Add(new() { Id = 8, MemberId = 2, PlanId = 7 });
+            //var membershipList = new List<Membership>();
+            //membershipList.Add(new() { Id = 8, MemberId = 2, PlanId = 7 });
 
-            _publisherService.Enqueue(membershipList, "test_queue", "forecast_exchange", ExchangeType.Direct, "");
+            //_publisherService.Enqueue(membershipList, "test_queue", "forecast_exchange", ExchangeType.Direct, "");
 
             #endregion
 
