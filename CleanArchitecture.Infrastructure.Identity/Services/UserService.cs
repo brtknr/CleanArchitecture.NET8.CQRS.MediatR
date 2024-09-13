@@ -15,12 +15,14 @@ namespace CleanArchitecture.Infrastructure.Identity.Services
     public class UserService : IUserService
     {
         readonly UserManager<AppUser> _userManager;
-        readonly SignInManager<AppUser> _signInManager; 
+        readonly SignInManager<AppUser> _signInManager;
+        readonly AuthService _authService;
 
-        public UserService(UserManager<AppUser> userManager,SignInManager<AppUser> signInManager)
+        public UserService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, AuthService authService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _authService = authService;
         }
 
         public async Task<CreateUserCommandResponse> CreateUser(CreateUserCommandRequest request)
@@ -53,7 +55,7 @@ namespace CleanArchitecture.Infrastructure.Identity.Services
             return response;
         }
 
-        public async Task<LoginUserCommandResponse> LoginUser(LoginUserCommandRequest request)
+        public async Task<SignInResult> LoginUser(LoginUserCommandRequest request)
         {
             AppUser user = await _userManager.FindByNameAsync(request.UsernameOrEmail);
             if (user == null)
@@ -63,13 +65,8 @@ namespace CleanArchitecture.Infrastructure.Identity.Services
                 throw new UserNotFoundException();
 
             SignInResult signInResult = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
-            if (signInResult.Succeeded)
-            {
-                // user is authenticated 
-                // authorization processes - jwt -
-            }
-
-            return new();
+           
+            return signInResult;
         }
     }
 }

@@ -10,10 +10,12 @@ using RabbitMQ.Client;
 using CleanArchitecture.Infrastructure.Common.RabbitMQ;
 using CleanArchitecture.Application.Features.Members.Queries.ListMembers;
 using CleanArchitecture.Application.Features.Members.Commands.AddMember;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CleanArchitecture.Controllers
 {
     [ApiController]
+    [Authorize(AuthenticationSchemes = "Admin")]
     [Route("[controller]/[action]")]
     public class MemberController(ISender _mediator,IPublisherService _publisherService) : ControllerBase
     {

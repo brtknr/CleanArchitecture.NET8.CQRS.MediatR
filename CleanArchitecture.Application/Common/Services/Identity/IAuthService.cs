@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CleanArchitecture.Application.DTOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,6 @@ namespace CleanArchitecture.Application.Common.Services.Identity
 {
     public interface IAuthService
     {
+        Token CreateAccessToken(int minute); 
     }
 }
