@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace Exceptions
+namespace CleanArchitecture.Application.Exceptions
 {
     [Serializable]
     public class ValidationException : Exception

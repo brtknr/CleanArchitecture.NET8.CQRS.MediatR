@@ -1,6 +1,6 @@
 ﻿using CleanArchitecture.Application.Common.Filters;
-using CleanArchitecture.Application.Memberships.Commands.CreateMembership;
-using CleanArchitecture.Application.Memberships.Queries.ListMemberships;
+using CleanArchitecture.Application.Features.Memberships.Commands.CreateMembership;
+using CleanArchitecture.Application.Features.Memberships.Queries.ListMemberships;
 using CleanArchitecture.Contracts.Membership;
 using CleanArchitecture.Domain;
 using CleanArchitecture.Infrastructure.Common.RabbitMQ;
@@ -13,7 +13,7 @@ namespace CleanArchitecture.Api.Controllers
 {
     [Route("[controller]/[action]")]
     [ApiController]
-    public class MembershipController(ISender _mediator,IPublisherService _publisherService) : ControllerBase
+    public class MembershipController(ISender _mediator /*,IPublisherService _publisherService*/) : ControllerBase
     {
         [HttpGet]
         public async Task<IEnumerable<Membership>> GetAllMemberships()

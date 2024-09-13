@@ -1,6 +1,6 @@
 ﻿using CleanArchitecture.Application.Common.Behaviors;
 using CleanArchitecture.Application.Common.Filters;
-using CleanArchitecture.Application.Members.Commands.AddMember;
+using CleanArchitecture.Application.Features.Memberships.Commands.CreateMembership;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System;

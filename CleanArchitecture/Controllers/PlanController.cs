@@ -1,7 +1,6 @@
 ﻿using CleanArchitecture.Application.Common.Filters;
-using CleanArchitecture.Application.Members.Queries.ListMembers;
-using CleanArchitecture.Application.Plans.Commands.CreatePlan;
-using CleanArchitecture.Application.Plans.Queries.ListPlans;
+using CleanArchitecture.Application.Features.Plans.Commands.CreatePlan;
+using CleanArchitecture.Application.Features.Plans.Queries.ListPlans;
 using CleanArchitecture.Contracts.Plan;
 using CleanArchitecture.Domain;
 using MediatR;

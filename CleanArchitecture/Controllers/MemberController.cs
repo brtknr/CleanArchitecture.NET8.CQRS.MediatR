@@ -1,15 +1,15 @@
-using CleanArchitecture.Application.Members.Queries.ListMembers;
 using CleanArchitecture.Domain;
 using CleanArchitecture.Contracts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using CleanArchitecture.Application.Members.Commands.AddMember;
 using System.Net;
 using CleanArchitecture.Contracts.Member;
 using CleanArchitecture.Application.Common.Filters;
 using Microsoft.AspNetCore.Mvc.Filters;
 using RabbitMQ.Client;
 using CleanArchitecture.Infrastructure.Common.RabbitMQ;
+using CleanArchitecture.Application.Features.Members.Queries.ListMembers;
+using CleanArchitecture.Application.Features.Members.Commands.AddMember;
 
 namespace CleanArchitecture.Controllers
 {

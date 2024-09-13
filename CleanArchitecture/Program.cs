@@ -2,6 +2,8 @@ using CleanArchitecture.Api.BackgroundServices;
 using CleanArchitecture.Api.Middlewares;
 using CleanArchitecture.Application;
 using CleanArchitecture.Infrastructure;
+using CleanArchitecture.Infrastructure.Identity;
+using CleanArchitecture.Infrastructure.Identity.Extensions;
 using Serilog;
 using StackExchange.Redis;
 
@@ -32,8 +34,11 @@ builder.Services.AddSwaggerGen();
 
 
 builder.Services.AddInfrastructure(builder.Configuration)
-                .AddApplication();
-
+                .AddApplication()
+                .AddIdentityDbContext(builder.Configuration)
+                .AddInfrastructureIdentityServices()
+                .AddIdentityAuth()
+                .AddAuthorization();
 
 var app = builder.Build();
 
