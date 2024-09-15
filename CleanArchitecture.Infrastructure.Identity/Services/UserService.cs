@@ -16,13 +16,12 @@ namespace CleanArchitecture.Infrastructure.Identity.Services
     {
         readonly UserManager<AppUser> _userManager;
         readonly SignInManager<AppUser> _signInManager;
-        readonly AuthService _authService;
-
-        public UserService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, AuthService authService)
+      
+        public UserService(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _authService = authService;
+         
         }
 
         public async Task<CreateUserCommandResponse> CreateUser(CreateUserCommandRequest request)
