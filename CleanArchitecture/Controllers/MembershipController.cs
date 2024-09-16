@@ -2,7 +2,7 @@
 using CleanArchitecture.Application.Features.Memberships.Commands.CreateMembership;
 using CleanArchitecture.Application.Features.Memberships.Queries.ListMemberships;
 using CleanArchitecture.Contracts.Membership;
-using CleanArchitecture.Domain;
+using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Infrastructure.Common.RabbitMQ;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;

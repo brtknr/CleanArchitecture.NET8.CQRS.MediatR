@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CleanArchitecture.Domain
+namespace CleanArchitecture.Domain.Entities
 {
     public class Exercise : BaseEntity
     {

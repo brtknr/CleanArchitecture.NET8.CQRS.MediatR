@@ -1,7 +1,7 @@
 ﻿using CleanArchitecture.Application.Common.Behaviors;
 using CleanArchitecture.Application.Common.Interfaces;
 using CleanArchitecture.Application.Errors;
-using CleanArchitecture.Domain;
+using CleanArchitecture.Domain.Entities;
 using FluentValidation.Results;
 using MediatR;
 using System;
@@ -18,15 +18,15 @@ namespace CleanArchitecture.Application.Features.Memberships.Commands.CreateMemb
         public async Task<CreateMembershipResponse> Handle(CreateMembershipCommand request, CancellationToken cancellationToken)
         {
 
-            var member = _uow.MemberRepository.GetByIdAsync(request.memberId).Result;
+            //var member = _uow.MemberRepository.GetByIdAsync(request.memberId).Result;
             var plan = _uow.PlanRepository.GetByIdAsync(request.planId).Result;
 
-            if (member == null || plan == null)
-            {
-                var errorList = new List<ValidationError>();
-                errorList.Add(new ValidationError("Plan,Member", "Plan or member is not found."));
-                throw new Exceptions.ValidationException(errorList);
-            }
+            //if (member == null || plan == null)
+            //{
+            //    var errorList = new List<ValidationError>();
+            //    errorList.Add(new ValidationError("Plan,Member", "Plan or member is not found."));
+            //    throw new Exceptions.ValidationException(errorList);
+            //}
 
             Membership membership = new()
             {
@@ -41,8 +41,8 @@ namespace CleanArchitecture.Application.Features.Memberships.Commands.CreateMemb
 
 
 
-            return new(member.FirstName,
-                       member.LastName,
+            return new("",
+                       "",
                        plan.Title,
                        request.startDate,
                        request.startDate.AddDays(plan.TotalDays),

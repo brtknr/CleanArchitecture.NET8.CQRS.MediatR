@@ -22,21 +22,16 @@ namespace CleanArchitecture.Application.Features.AppUser.LoginUser
 
         public async Task<LoginUserCommandResponse> Handle(LoginUserCommandRequest request, CancellationToken cancellationToken)
         {
-            var signInResult = await _userService.LoginUser(request);
-
+            var (signInResult,isBusiness) = await _userService.LoginUser(request);
+            
             if (signInResult.Succeeded)
             {
-                Token token = _authService.CreateAccessToken(5);
+                Token token = _authService.CreateAccessToken(5,isBusiness);
                 return new LoginUserSuccessCommandResponse()
                 {
                     Token = token
                 };
             }
-
-            //return new LoginUserErrorCommandResponse()
-            //{
-            //    Message = "Username or password is incorrect."
-            //};
 
             throw new AuthenticationErrorException();
         }

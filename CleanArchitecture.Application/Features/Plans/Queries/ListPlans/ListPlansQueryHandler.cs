@@ -1,6 +1,6 @@
 ﻿using CleanArchitecture.Application.Common.Interfaces;
 using CleanArchitecture.Application.Common.Services;
-using CleanArchitecture.Domain;
+using CleanArchitecture.Domain.Entities;
 using MediatR;
 using System;
 using System.Collections.Generic;

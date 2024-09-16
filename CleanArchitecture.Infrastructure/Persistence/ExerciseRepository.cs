@@ -1,5 +1,5 @@
 ﻿using CleanArchitecture.Application.Common.Interfaces;
-using CleanArchitecture.Domain;
+using CleanArchitecture.Domain.Entities;
 using CleanArchitecture.Infrastructure.Common.Persistence;
 using System;
 using System.Collections.Generic;

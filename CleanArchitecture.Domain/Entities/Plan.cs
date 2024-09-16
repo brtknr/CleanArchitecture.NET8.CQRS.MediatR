@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using CleanArchitecture.Domain.Common;
 
-namespace CleanArchitecture.Domain
+namespace CleanArchitecture.Domain.Entities
 {
     public class Plan : BaseEntity
     {
+        public int GymId { get; set; }
         public string Title { get; set; } = string.Empty;
         public int TotalDays { get; set; }
         public double Price { get; set; }

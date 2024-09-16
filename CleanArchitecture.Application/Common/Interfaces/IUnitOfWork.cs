@@ -9,7 +9,6 @@ namespace CleanArchitecture.Application.Common.Interfaces
     public interface IUnitOfWork
     {
         IExerciseRepository ExerciseRepository { get; }
-        IMemberRepository MemberRepository { get; }
         IMembershipRepository MembershipRepository { get; }
         IPlanRepository PlanRepository { get; }
         IWorkoutRepository WorkoutRepository { get; }

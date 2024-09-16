@@ -12,6 +12,6 @@ namespace CleanArchitecture.Application.Common.Services.Identity
     public interface IUserService
     {
         Task<CreateUserCommandResponse> CreateUser(CreateUserCommandRequest request);
-        Task<SignInResult> LoginUser(LoginUserCommandRequest request);
+        Task<(SignInResult,bool)> LoginUser(LoginUserCommandRequest request);
     }
 }

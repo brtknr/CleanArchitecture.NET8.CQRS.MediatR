@@ -2,7 +2,7 @@
 using CleanArchitecture.Application.Features.Plans.Commands.CreatePlan;
 using CleanArchitecture.Application.Features.Plans.Queries.ListPlans;
 using CleanArchitecture.Contracts.Plan;
-using CleanArchitecture.Domain;
+using CleanArchitecture.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

@@ -18,6 +18,7 @@ namespace CleanArchitecture.Infrastructure.Identity.Models
         public int? Gender { get; set; } 
         public string? MersisNo { get; set; } // for businesses
         public string? Address { get; set; }
+        public bool isBusiness { get; set; } // 1 for business - 0 for customer
 
     }
 }

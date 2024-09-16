@@ -44,7 +44,6 @@ namespace CleanArchitecture.Infrastructure
                 options.UseSqlServer(configuration.GetConnectionString("GymDb"))
                 );
             
-            services.AddScoped<IMemberRepository,MemberRepository>();
             services.AddScoped<IMembershipRepository, MembershipRepository>();
             services.AddScoped<IExerciseRepository, ExerciseRepository>();
             services.AddScoped<IWorkoutRepository, WorkoutRepository>();

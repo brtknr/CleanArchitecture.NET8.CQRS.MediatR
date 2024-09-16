@@ -19,5 +19,6 @@ namespace CleanArchitecture.Application.Features.AppUser.CreateUser
         public string? MersisNo { get; set; }
         public string Password { get; set; }
         public string PasswordConfirm { get; set; }
+        public bool isBusiness { get; set; } // 0 for customer - 1 for business
     }
 }

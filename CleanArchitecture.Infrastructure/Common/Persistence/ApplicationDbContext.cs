@@ -1,5 +1,5 @@
-﻿using CleanArchitecture.Domain;
-using CleanArchitecture.Domain.Common;
+﻿using CleanArchitecture.Domain.Common;
+using CleanArchitecture.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,8 +19,10 @@ namespace CleanArchitecture.Infrastructure.Common.Persistence
         public DbSet<Workout> Workout { get; set; }
         public DbSet<Exercise> Exercise { get; set; }
         public DbSet<Plan> Plan { get; set; }
-        public DbSet<Member> Member { get; set; }
         public DbSet<Membership> Membership { get; set; }
+        public DbSet<Gym> Gym { get; set; }
+        public DbSet<ImageFile> ImageFile { get; set; }
+        public DbSet<MembershipRequest> MembershipRequest { get; set; }
 
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {

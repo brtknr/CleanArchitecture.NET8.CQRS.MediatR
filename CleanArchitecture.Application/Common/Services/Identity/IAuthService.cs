@@ -9,6 +9,6 @@ namespace CleanArchitecture.Application.Common.Services.Identity
 {
     public interface IAuthService
     {
-        Token CreateAccessToken(int minute); 
+        Token CreateAccessToken(int minute,bool isBusiness); 
     }
 }

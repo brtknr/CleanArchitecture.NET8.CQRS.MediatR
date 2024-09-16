@@ -54,7 +54,7 @@ namespace CleanArchitecture.Infrastructure.Identity.Services
             return response;
         }
 
-        public async Task<SignInResult> LoginUser(LoginUserCommandRequest request)
+        public async Task<(SignInResult,bool)> LoginUser(LoginUserCommandRequest request)
         {
             AppUser user = await _userManager.FindByNameAsync(request.UsernameOrEmail);
             if (user == null)
@@ -65,7 +65,7 @@ namespace CleanArchitecture.Infrastructure.Identity.Services
 
             SignInResult signInResult = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
            
-            return signInResult;
+            return (signInResult,user.isBusiness);
         }
     }
 }

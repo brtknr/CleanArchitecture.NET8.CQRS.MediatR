@@ -17,14 +17,12 @@ namespace CleanArchitecture.Infrastructure.Common.Persistence
         {
             _db = db;
             ExerciseRepository = new ExerciseRepository(db);
-            MemberRepository = new MemberRepository(db);
             MembershipRepository = new MembershipRepository(db);
             PlanRepository = new PlanRepository(db);
             WorkoutRepository = new WorkoutRepository(db);
         }
 
         public IExerciseRepository ExerciseRepository { get; private set; }
-        public IMemberRepository MemberRepository { get; private set; }
         public IMembershipRepository MembershipRepository { get; private set; }
         public IPlanRepository PlanRepository { get; private set; }
         public IWorkoutRepository WorkoutRepository { get; private set; }
