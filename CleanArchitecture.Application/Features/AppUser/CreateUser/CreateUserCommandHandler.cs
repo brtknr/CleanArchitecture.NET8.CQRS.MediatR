@@ -11,12 +11,10 @@ namespace CleanArchitecture.Application.Features.AppUser.CreateUser
     public class CreateUserCommandHandler : IRequestHandler<CreateUserCommandRequest, CreateUserCommandResponse>
     {
         readonly IUserService _userService;
-        readonly IAuthService _authService;
 
-        public CreateUserCommandHandler(IUserService userService, IAuthService authService)
+        public CreateUserCommandHandler(IUserService userService)
         {
             _userService = userService;
-            _authService = authService;
         }
 
         public async Task<CreateUserCommandResponse> Handle(CreateUserCommandRequest request, CancellationToken cancellationToken)

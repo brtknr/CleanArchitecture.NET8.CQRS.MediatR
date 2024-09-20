@@ -4,6 +4,8 @@ using CleanArchitecture.Application.Features.Plans.Queries.ListPlans;
 using CleanArchitecture.Contracts.Plan;
 using CleanArchitecture.Domain.Entities;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +17,7 @@ namespace CleanArchitecture.Api.Controllers
     {
 
         [HttpGet]
+        [Authorize(Policy = "BusinessPolicy",AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]   // only business users
         public async Task<IEnumerable<Plan>> GetAllPlans()
         {
             var query = new ListPlansQuery();

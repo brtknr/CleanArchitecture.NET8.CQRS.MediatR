@@ -20,12 +20,19 @@ namespace CleanArchitecture.Infrastructure.Common.Persistence
             MembershipRepository = new MembershipRepository(db);
             PlanRepository = new PlanRepository(db);
             WorkoutRepository = new WorkoutRepository(db);
+            GymRepository = new GymRepository(db);
+            MembershipRequestRepository = new MembershipRequestRepository(db);
+            ImageFileRepository = new ImageFileRepository(db);
         }
 
         public IExerciseRepository ExerciseRepository { get; private set; }
         public IMembershipRepository MembershipRepository { get; private set; }
         public IPlanRepository PlanRepository { get; private set; }
         public IWorkoutRepository WorkoutRepository { get; private set; }
+        public IGymRepository GymRepository { get; private set; }
+        public IMembershipRequestRepository MembershipRequestRepository { get; private set; }
+        public IImageFileRepository ImageFileRepository { get; private set; }
+
 
         public async void SaveAsync()
         {

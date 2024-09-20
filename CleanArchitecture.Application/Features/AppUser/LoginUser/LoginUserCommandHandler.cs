@@ -22,11 +22,11 @@ namespace CleanArchitecture.Application.Features.AppUser.LoginUser
 
         public async Task<LoginUserCommandResponse> Handle(LoginUserCommandRequest request, CancellationToken cancellationToken)
         {
-            var (signInResult,isBusiness) = await _userService.LoginUser(request);
+            var (signInResult,userClaims) = await _userService.LoginUser(request);
             
             if (signInResult.Succeeded)
             {
-                Token token = _authService.CreateAccessToken(5,isBusiness);
+                Token token = _authService.CreateAccessToken(5,userClaims);
                 return new LoginUserSuccessCommandResponse()
                 {
                     Token = token

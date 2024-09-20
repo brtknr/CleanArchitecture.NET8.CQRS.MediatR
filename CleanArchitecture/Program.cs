@@ -3,11 +3,13 @@ using CleanArchitecture.Api.Middlewares;
 using CleanArchitecture.Application;
 using CleanArchitecture.Infrastructure;
 using CleanArchitecture.Infrastructure.Identity;
+using CleanArchitecture.Infrastructure.Identity.Enums;
 using CleanArchitecture.Infrastructure.Identity.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using StackExchange.Redis;
+using System.Security.Claims;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +21,7 @@ Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     //.WriteTo.Seq(,)
     .WriteTo.File("logs/log-.txt",rollingInterval:RollingInterval.Day)
+    //.WriteTo.Seq() // to do seq implementation
     .CreateLogger();
 
 builder.Services.AddStackExchangeRedisCache(options =>
@@ -42,7 +45,7 @@ builder.Services.AddInfrastructure(builder.Configuration)
                 .AddInfrastructureIdentityServices()
                 .AddIdentityAuth()
                 .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer("Admin",options =>
+                .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new()
                     {
@@ -53,6 +56,8 @@ builder.Services.AddInfrastructure(builder.Configuration)
                     };
                 });
                 
+builder.Services.AddAuthorization(x => x.AddPolicy("BusinessPolicy", policy => policy.RequireClaim(ClaimTypes.Role,Roles.Business.ToString())));
+builder.Services.AddAuthorization(x => x.AddPolicy("CustomerPolicy", policy => policy.RequireClaim(ClaimTypes.Role, Roles.Customer.ToString())));
 
 var app = builder.Build();
 

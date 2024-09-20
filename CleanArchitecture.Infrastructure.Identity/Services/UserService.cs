@@ -2,11 +2,13 @@
 using CleanArchitecture.Application.Exceptions;
 using CleanArchitecture.Application.Features.AppUser.CreateUser;
 using CleanArchitecture.Application.Features.AppUser.LoginUser;
+using CleanArchitecture.Infrastructure.Identity.Enums;
 using CleanArchitecture.Infrastructure.Identity.Models;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -37,10 +39,11 @@ namespace CleanArchitecture.Infrastructure.Identity.Services
                                             MersisNo = request.MersisNo,
                                             PhoneNumber = request.PhoneNumber,
                                             Address = request.Address,
+                                            isBusiness = request.isBusiness // 0 for customer - 1 for business
                                         }, request.Password);
 
             CreateUserCommandResponse response = new() { Succeeded = result.Succeeded };
-
+            
             if (result.Succeeded)
             {
                 response.Message = "User has been created successfully.";
@@ -54,7 +57,7 @@ namespace CleanArchitecture.Infrastructure.Identity.Services
             return response;
         }
 
-        public async Task<(SignInResult,bool)> LoginUser(LoginUserCommandRequest request)
+        public async Task<(SignInResult, List<Claim>)> LoginUser(LoginUserCommandRequest request)
         {
             AppUser user = await _userManager.FindByNameAsync(request.UsernameOrEmail);
             if (user == null)
@@ -64,8 +67,20 @@ namespace CleanArchitecture.Infrastructure.Identity.Services
                 throw new UserNotFoundException();
 
             SignInResult signInResult = await _signInManager.CheckPasswordSignInAsync(user, request.Password, false);
-           
-            return (signInResult,user.isBusiness);
+
+            var userClaims = await _userManager.GetClaimsAsync(user);
+            
+            if (signInResult.Succeeded)
+            {
+                Claim claim = user.isBusiness ? new Claim(ClaimTypes.Role,Roles.Business.ToString()) : new Claim(ClaimTypes.Role,Roles.Customer.ToString());
+                if (!userClaims.Any(x => x.Type == ClaimTypes.Role)) // when user is created.role is defined once and for all. cannot(shouldn't) be changed after user is created
+                {
+                    await _userManager.AddClaimAsync(user, claim);
+                    userClaims.Add(claim);
+                }
+            }
+
+            return (signInResult,userClaims.ToList());
         }
     }
 }
