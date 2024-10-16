@@ -57,7 +57,7 @@ builder.Services.AddInfrastructure(builder.Configuration)
                 });
                 
 builder.Services.AddAuthorization(x => x.AddPolicy("BusinessPolicy", policy => policy.RequireClaim(ClaimTypes.Role,Roles.Business.ToString())));
-builder.Services.AddAuthorization(x => x.AddPolicy("CustomerPolicy", policy => policy.RequireClaim(ClaimTypes.Role, Roles.Customer.ToString())));
+builder.Services.AddAuthorization(x => x.AddPolicy("CustomerPolicy", policy => policy.RequireClaim(ClaimTypes.Role,Roles.Customer.ToString())));
 
 var app = builder.Build();
 

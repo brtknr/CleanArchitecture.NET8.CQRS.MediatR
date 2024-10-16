@@ -73,7 +73,7 @@ namespace CleanArchitecture.Infrastructure.Identity.Services
             if (signInResult.Succeeded)
             {
                 Claim claim = user.isBusiness ? new Claim(ClaimTypes.Role,Roles.Business.ToString()) : new Claim(ClaimTypes.Role,Roles.Customer.ToString());
-                if (!userClaims.Any(x => x.Type == ClaimTypes.Role)) // when user is created.role is defined once and for all. cannot(shouldn't) be changed after user is created
+                if (!userClaims.Any(x => x.Type == ClaimTypes.Role))
                 {
                     await _userManager.AddClaimAsync(user, claim);
                     userClaims.Add(claim);
