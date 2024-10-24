@@ -8,6 +8,7 @@ using CleanArchitecture.Infrastructure.Identity.Extensions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
+using Serilog.Events;
 using StackExchange.Redis;
 using System.Security.Claims;
 using System.Text;
@@ -19,9 +20,12 @@ var builder = WebApplication.CreateBuilder(args);
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
     .WriteTo.Console()
-    //.WriteTo.Seq(,)
+    .WriteTo.Seq("http://localhost:5341")
     .WriteTo.File("logs/log-.txt",rollingInterval:RollingInterval.Day)
-    //.WriteTo.Seq() // to do seq implementation
+    .MinimumLevel.Information()
+    .MinimumLevel.Override("Microsoft.AspNetCore", LogEventLevel.Warning)
+    .Enrich.WithProperty("AppName", "Serilog Sample")
+    .Enrich.WithProperty("Environment", "development")
     .CreateLogger();
 
 builder.Services.AddStackExchangeRedisCache(options =>
