@@ -26,6 +26,7 @@ namespace CleanArchitecture.Api.Middlewares
             }
             catch (ValidationException exception)
             {
+                _logger.LogError($"Validation Error:{exception}");
                 await HandleValidationException(context, exception);
             }
             catch (Exception exception) 
